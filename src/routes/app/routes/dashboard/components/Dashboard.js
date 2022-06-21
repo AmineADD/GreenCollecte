@@ -4,27 +4,24 @@ import { connect } from 'react-redux';
 import './styles.scss';
 import ContainerStats from './Stats/ContainerStats';
 import ContainerMap from './Map/ContainerMap';
-import ContainerMarkers from './Stats/ContainerMarkers';
 import Header from './Header/Header';
+import Typography from '@material-ui/core/Typography';
 
 
 const Main = ({ connected }) => (
-  <div className="col-md-12">
+  <div className="grid-structure">
     <Header />
-    <div className='row '>
-      <div className='col-md-3'>
-        <ContainerMarkers />
-      </div>
-      <div className={`col-md-${connected ? 6 : 9}`}>
-        <ContainerMap />
-      </div>
+    <div className="row">
       {
         connected && (<div className='col-md-3'>
           <ContainerStats />
         </div>)
       }
+      <div className={`col-md-${connected ? 9 : 12}`}>
+        <ContainerMap />
+      </div>
     </div>
-  </div >
+  </div>
 );
 
 

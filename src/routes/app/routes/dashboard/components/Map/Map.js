@@ -7,7 +7,7 @@ import Marker from './Marker';
 class CollecteMap extends Component {
     render() {
         return (
-            <div style={{ height: '85vh', width: '100%' }}>
+            <div style={{ height: '90vh', width: '100%' }}>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: "" }}
                     defaultCenter={{
