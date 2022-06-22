@@ -9,6 +9,7 @@ import {
   CHANGE_THEME,
   CHANGE_HEADER,
   FireStore_ACTION,
+  CONNECT_ORGANISATION,
   CONNECT_ACTION
 } from '../constants/actionTypes';
 
@@ -67,6 +68,12 @@ const settings = (state = initialSettings, action) => {
         ...state,
         user: action.value
       };
+    case CONNECT_ORGANISATION: {
+      return {
+        ...state,
+        organisation: action.value
+      }
+    }
     default:
       return state;
   }

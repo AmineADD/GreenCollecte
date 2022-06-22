@@ -28,6 +28,8 @@ const Main = ({ connected, database }) => (
 
 
 const Dashboard = ({ db, user }) => {
+
+
   return (
     <div className="container-fluid no-breadcrumb page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">
@@ -39,7 +41,7 @@ const Dashboard = ({ db, user }) => {
 const mapStateToProps = state => ({
   headerValue: state.settings.headervalue,
   db: state.settings.fireStore,
-  user: state.settings.user
+  user: state.settings.user,
 });
 
 

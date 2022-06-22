@@ -30,3 +30,6 @@ export function databaseNotify(firestore) {
 export function ConnectFromGoogle(user) {
   return { type: types.CONNECT_ACTION, value: user }
 }
+export function CONNECT_ORGANISATION(organisation) {
+  return { type: types.CONNECT_ORGANISATION, value: organisation }
+}

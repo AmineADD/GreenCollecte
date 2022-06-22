@@ -143,6 +143,7 @@ const CreateWasteform = ({ onClose }) => {
                                 selectProps={{
                                     position,
                                     onChange: setPosition,
+                                    placeholder:'Votre adresse'
                                 }}
                             /> */}
                         </div>
