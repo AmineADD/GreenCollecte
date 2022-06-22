@@ -5,10 +5,9 @@ import './styles.scss';
 import ContainerStats from './Stats/ContainerStats';
 import ContainerMap from './Map/ContainerMap';
 import Header from './Header/Header';
-import Typography from '@material-ui/core/Typography';
 
 
-const Main = ({ connected }) => (
+const Main = ({ connected, database }) => (
   <div className="grid-structure">
     <Header />
     <div className="row">
@@ -18,7 +17,7 @@ const Main = ({ connected }) => (
         </div>)
       }
       <div className={`col-md-${connected ? 9 : 12}`}>
-        <ContainerMap />
+        <ContainerMap data={database} />
       </div>
     </div>
   </div>
@@ -28,11 +27,11 @@ const Main = ({ connected }) => (
 
 
 
-const Dashboard = ({ db }) => {
+const Dashboard = ({ db, user }) => {
   return (
     <div className="container-fluid no-breadcrumb page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">
-        <Main connected={true} />
+        <Main connected={!!user} database={db} />
       </QueueAnim>
     </div>
   );
@@ -40,6 +39,7 @@ const Dashboard = ({ db }) => {
 const mapStateToProps = state => ({
   headerValue: state.settings.headervalue,
   db: state.settings.fireStore,
+  user: state.settings.user
 });
 
 

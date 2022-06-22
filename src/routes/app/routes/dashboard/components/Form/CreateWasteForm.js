@@ -7,15 +7,27 @@ import { RadioGroup, Typography } from '@material-ui/core';
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import database, { storage } from '../../../../Firebase/Firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { addDoc, collection } from 'firebase/firestore';
 
-const CreateWasteform = () => {
+const CreateWasteform = ({ onClose }) => {
     const [value, setValue] = useState('normale');
     const [position, setPosition] = useState(null);
-    const [posLatLong, setPosLatLong] = useState(null);
+    const [posLatLong, setPosLatLong] = useState({
+        lng: 2.381912,
+        lat: 48.783412
+    });
+    const [file, setFile] = useState(null);
+    const [img, setImg] = useState();
+    const [kg, setKg] = useState(null);
+    const [nbPiece, setNbPiece] = useState(1);
+    const [idPassage, setIdPassage] = useState();
+    const [error, setError] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const handleChange = (event) => {
         setValue(event.target.value);
     };
-
     useEffect(() => {
         if (position) {
             geocodeByAddress(position.label)
@@ -26,10 +38,58 @@ const CreateWasteform = () => {
         }
     }, [position]);
 
-    // eslint-disable-next-line
-    const handleSendToFirebase = () => {
-        if (posLatLong) {
+    useEffect(() => {
+        if (file) {
+            onUpload();
+        }
+    }, [file]);
 
+    useEffect(() => {
+        if (isSubmitted) {
+            setKg(0);
+            setNbPiece(0);
+            setValue('normale');
+            setImg(null);
+            setIdPassage();
+            setPosLatLong();
+        }
+    }, [isSubmitted])
+
+    const onfilechange = (e) => {
+        const upl = e.target.files[0];
+        if (upl) {
+            setFile(upl);
+
+        }
+    }
+    const onUpload = async () => {
+        const storageRef = ref(storage, file.name)
+        uploadBytes(storageRef, file).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                setImg(url);
+            })
+        })
+    }
+
+
+
+    const handleSendToFirebase = async () => {
+        if (kg && nbPiece && value && img && posLatLong) {
+            await addDoc(collection(database, "wastes"), {
+                position: posLatLong,
+                idPassage: idPassage ? idPassage : "",
+                priority: value,
+                src: img,
+                nbPiece,
+                weight: kg,
+                date: new Date()
+            }).then(() => {
+                setIsSubmitted(true);
+            });
+            onClose(false);
+            console.log("done")
+        } else {
+            setError(error);
         }
     }
 
@@ -50,6 +110,7 @@ const CreateWasteform = () => {
                                 }
                                 }
                                 placeholder="Kg"
+                                onChange={(e) => setKg(e.target.value)}
                                 fullWidth
                             />
                         </div>
@@ -65,6 +126,7 @@ const CreateWasteform = () => {
                                 defaultValue={1}
                                 id="pieceTextField"
                                 fullWidth
+                                onChange={(e) => setNbPiece(e.target.value)}
                             />
                         </div>
                         <div className="form-group">
@@ -86,8 +148,9 @@ const CreateWasteform = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="icon-button-file">
-                                Ajoutez une photo
-                                <IconButton color="primary" component="span">
+                                {file ? file.name : "Ajoutez une photo"}
+                                <input accept="image/*" style={{ display: 'none' }} id="icon-button-file" type="file" onChange={onfilechange} />
+                                <IconButton color="primary" component="span" >
                                     <PhotoCamera />
                                 </IconButton>
                             </label>
@@ -97,11 +160,12 @@ const CreateWasteform = () => {
                             <Input
                                 id="identifiant"
                                 placeholder="Id : 098723243"
+                                onChange={(e) => setIdPassage(e.target.value)}
                                 fullWidth
                             />
                         </div>
-                        <Button variant="contained" color="secondary" className="btn-w-md" fullWidth> Déclarer </Button>
-
+                        {error && (<span className='text-danger m-2'>Error : SVP Vérifiez les champs</span>)}
+                        <Button onClick={handleSendToFirebase} variant="contained" color="secondary" className="btn-w-md" fullWidth> Déclarer </Button>
                     </form>
 
                 </div>

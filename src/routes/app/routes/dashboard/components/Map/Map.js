@@ -5,7 +5,20 @@ import GoogleMapReact from 'google-map-react';
 import Marker from './Marker';
 
 class CollecteMap extends Component {
+    getPrioritycolor = (prioriy, idPassage) => {
+        if (idPassage !== "") {
+            return "#00BCD4";// ramassage;
+        }
+
+        switch (prioriy) {
+            case 'normale': break;
+            case 'basse': break;
+            default:
+                return "#EF5350"; // rouge
+        }
+    }
     render() {
+        const { markers } = this.props
         return (
             <div style={{ height: '90vh', width: '100%' }}>
                 <GoogleMapReact
@@ -16,22 +29,20 @@ class CollecteMap extends Component {
                     }}
                     defaultZoom={16}
                 >
-                    <Marker
-                        lng={2.381912}
-                        lat={48.783412}
-                        text="My position"
-                    />
-
-                    <Marker
-                        lng={12.381912}
-                        lat={48.783412}
-                        text="My position"
-                    />
-                    <Marker
-                        lng={2.381912}
-                        lat={47.783412}
-                        text="My position"
-                    />
+                    {markers ? markers.map(({ position, priority, idPassage, nbPiece, src, weight, date }, i) =>
+                        <Marker
+                            key={`${i}-map`}
+                            {...position}
+                            color={this.getPrioritycolor(priority, idPassage)}
+                            text={"Encombrant"}
+                            nbPiece={nbPiece}
+                            src={src}
+                            weight={weight}
+                            passage={idPassage}
+                            date={date}
+                            priority={priority}
+                        />
+                    ) : null}
                 </GoogleMapReact>
             </div>
         );

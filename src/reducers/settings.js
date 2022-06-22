@@ -8,7 +8,8 @@ import {
   CHANGE_COLOR_OPTION,
   CHANGE_THEME,
   CHANGE_HEADER,
-  FireStore_ACTION
+  FireStore_ACTION,
+  CONNECT_ACTION
 } from '../constants/actionTypes';
 
 const initialSettings = APPCONFIG.settings;
@@ -60,6 +61,11 @@ const settings = (state = initialSettings, action) => {
       return {
         ...state,
         fireStore: action.value
+      };
+    case CONNECT_ACTION:
+      return {
+        ...state,
+        user: action.value
       };
     default:
       return state;

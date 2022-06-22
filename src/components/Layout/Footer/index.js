@@ -12,11 +12,13 @@ const Footer = (props) => {
 
   useEffect(() => {
     const { handleDatabaseNotify } = props;
-    const truksCollectionRef = collection(database, "Trucs")
+    const truksCollectionRef = collection(database, "wastes")
     onSnapshot(truksCollectionRef, (snapshot) => {
+      const items = []
       snapshot.docs.forEach((doc) => {
-        handleDatabaseNotify(doc.data())
+        items.push(doc.data())
       })
+      handleDatabaseNotify(items)
     })
   }, [])
   return (

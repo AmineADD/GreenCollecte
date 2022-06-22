@@ -80,6 +80,7 @@ const mapStateToProps = (state, ownProps) => ({
   sidebarWidth: state.settings.sidebarWidth,
   theme: state.settings.theme,
   db: state.settings.fireStore,
+  user: state.settings.user
 });
 
 export default connect(
