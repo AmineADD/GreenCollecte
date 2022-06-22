@@ -29,7 +29,6 @@ const Main = ({ connected }) => (
 
 
 const Dashboard = ({ db }) => {
-  console.log(db, 'props db')
   return (
     <div className="container-fluid no-breadcrumb page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">
