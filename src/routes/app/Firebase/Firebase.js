@@ -1,13 +1,14 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
+
 const firebaseConfig = {
-    apiKey: "AIzaSyDy-ahf11eteYRB0s11DkzTwcP2ftxM26E",
-    authDomain: "green-collecte.firebaseapp.com",
-    projectId: "green-collecte",
-    storageBucket: "green-collecte.appspot.com",
-    messagingSenderId: "885418914995",
-    appId: "1:885418914995:web:879a7ea50df75379406cc6"
+    apiKey: process.env.REACT_APP_apiKey,
+    authDomain: process.env.REACT_APP_authDomain,
+    projectId: process.env.REACT_APP_projectId,
+    storageBucket: process.env.REACT_APP_storageBucket,
+    messagingSenderId: process.env.REACT_APP_messagingSenderId,
+    appId: process.env.REACT_APP_appId
 };
 
 const app = initializeApp(firebaseConfig);

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const BoxStat = ({ value, title, subTitle, icon, iconColor }) => (
-
     <div className="col-xl-12 col-sm-6"  >
         <div className="box box-default">
             <div className="box-top">

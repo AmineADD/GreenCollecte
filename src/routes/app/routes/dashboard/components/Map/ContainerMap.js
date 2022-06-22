@@ -12,22 +12,22 @@ const ContainerMap = () => {
 
     return (
         <div className="col-xl-12">
-            <div className="box box-default">
-                <div className="box-body">
-                    <div className="row">
-                        <CollecteMap />
-                    </div>
-                    <div className='row' style={{
-                        position: "absolute", top: 0, left: 0, marginLeft: '10px',
-                        marginTop: '30px'
-                    }}>
-                        <div className="cta-btn">
-                            <Button variant="fab" mini aria-label="add" onClick={() => setIsOpen(true)} >
-                                <AddIcon />
-                            </Button>
-                        </div>
+            <div className="container-fluid container-mw">
+
+                <div className="row">
+                    <CollecteMap />
+                </div>
+                <div className='row' style={{
+                    position: "absolute", top: 0, left: 0, marginLeft: '40px',
+                    marginTop: '10px'
+                }}>
+                    <div className="cta-btn">
+                        <Button variant="fab" mini aria-label="add" onClick={() => setIsOpen(true)} >
+                            <AddIcon />
+                        </Button>
                     </div>
                 </div>
+
             </div>
 
             <ModalCostum isOpen={isOpen} onClose={setIsOpen} >
