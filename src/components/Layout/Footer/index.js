@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import DEMO from 'constants/demoData';
 import { connect } from 'react-redux';
 import {
-  databaseNotify
+  databaseNotify,
+  CONNECT_ORGANISATION
 } from 'actions/settingsActions';
 
 import database from '../../../routes/app/Firebase/Firebase'
@@ -11,13 +12,23 @@ import { collection, onSnapshot } from '@firebase/firestore';
 const Footer = (props) => {
 
   useEffect(() => {
-    const { handleDatabaseNotify } = props;
-    const truksCollectionRef = collection(database, "Trucs")
+    const { handleDatabaseNotify, handleCONNECT_ORGANISATION } = props;
+    const truksCollectionRef = collection(database, "wastes");
+    const OrganisationCollectionRef = collection(database, "organisation");
     onSnapshot(truksCollectionRef, (snapshot) => {
+      const items = []
       snapshot.docs.forEach((doc) => {
-        handleDatabaseNotify(doc.data())
+        items.push(doc.data())
       })
-    })
+      handleDatabaseNotify(items)
+    });
+    onSnapshot(OrganisationCollectionRef, (snapOrganist) => {
+      const items = []
+      snapOrganist.docs.forEach((docOrga) => {
+        items.push(docOrga.data())
+      })
+      handleCONNECT_ORGANISATION(items)
+    });
   }, [])
   return (
     <section className="app-footer">
@@ -35,14 +46,15 @@ const Footer = (props) => {
   )
 };
 
-const mapStateToProps = state => ({
-  db: state.settings.fireStore,
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
   handleDatabaseNotify: (data) => {
     dispatch(databaseNotify(data));
-  }
+  },
+  handleCONNECT_ORGANISATION: (data) => {
+    dispatch(CONNECT_ORGANISATION(data));
+  },
 });
 
 export default connect(

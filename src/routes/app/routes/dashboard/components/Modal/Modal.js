@@ -20,7 +20,7 @@ export default function ModalCostum({ isOpen, onClose, children }) {
                 timeout: 500,
             }}>
             <Fade in={isOpen}>
-                <div className="col-xl-3 col-sm-3"  >
+                <div className="col-xl-3 col-md-12 col-sm-6"  >
                     <div className="box-body">
                         <div className="box box-default" style={{ borderRadius: '20px' }}>
                             <div className="box-top">

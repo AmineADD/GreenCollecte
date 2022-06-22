@@ -1,30 +1,37 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import BoxStatCostum from './BoxStatCostum';
+import BoxStat from './BoxStats';
 import './PinStats.css'
-const ContainerMarkers = () => (
+const ContainerMarkers = ({ data }) => (
     <div className="row">
         <div className="col-md-3">
             <div className="box-body">
-                <BoxStatCostum value={0} title={"Disponible"} />
+                <BoxStatCostum value={data ? data.filter((waste) => waste.idPassage === "").length : 0} title={"Disponible"} />
             </div>
         </div>
         <div className="col-md-3">
             <div className="box-body">
-                <BoxStatCostum value={2} title={"en ramassage"} color={"#00BCD4"} />
+                <BoxStatCostum value={data ? data.filter((waste) => waste.idPassage !== "").length : 0} title={"Programmé"} color={"#00BCD4"} />
             </div>
         </div>
         <div className="col-md-3">
             <div className="box-body">
-                <BoxStatCostum value={0} title={"Lourds"} color={"#ffc107"} />
+                <BoxStatCostum value={data ? data.filter((waste) => waste.priority === "élevé").length : 0} title={"Urgent"} color={"#EF5350"} />
             </div>
         </div>
         <div className="col-md-3">
             <div className="box-body">
-                <BoxStatCostum value={10} title={"urgent"} color={"#EF5350"} />
+                <BoxStat value={data ? data.length : 0} title={"Total"} subTitle={""} icon={"functions"} />
             </div>
         </div>
     </div>
 );
 
-
-export default ContainerMarkers;
+const mapStateToProps = state => ({
+    data: state.settings.fireStore,
+});
+export default connect(
+    mapStateToProps,
+    null
+)(ContainerMarkers);

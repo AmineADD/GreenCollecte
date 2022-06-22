@@ -3,8 +3,11 @@ import React from 'react';
 import classnames from 'classnames';
 import DEMO from 'constants/demoData';
 import APPCONFIG from 'constants/appConfig';
-import ThemeOptions from './ThemeOptions';
 import $ from 'jquery';
+import GoogleConnected from './GoogleConnected';
+import CreateOrganisationform from '../../routes/app/routes/dashboard/components/Form/CreateOrganisationForm';
+import { connect } from 'react-redux';
+import CreatePathWaste from '../../routes/app/routes/dashboard/components/Form/CreatePathWaste';
 
 class Customizer extends React.Component {
   constructor() {
@@ -37,7 +40,10 @@ class Customizer extends React.Component {
 
 
 
+
   render() {
+
+    const organisation = this.props.data.find((orga) => orga.displayName === localStorage.getItem('GOOGLE'));
     return (
       <section
         id="quickview-customizer"
@@ -57,25 +63,27 @@ class Customizer extends React.Component {
           <p className="customizer-header">Paramètres</p>
           <p className="small m-0">Bienvenue chez Green-collecte on vous propose solution 100% tech</p>
           <div className="text-right">
-            <div className="row">
-              <div className="col-md-12">
-                <a className="btn btn-outline-dark" href="" role="button" style={{ textTransform: 'none' }}>
-                  <img width="20px" style={{ marginBottom: '3px', marginRight: "5px" }} alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-                  Login with Google
-                </a>
-              </div>
-            </div>
+            <GoogleConnected />
           </div>
-          <div className="divider my-4 divider-solid" />
-          <ThemeOptions />
 
           <div className="divider my-4 divider-solid" />
-          <div className="text-right">
-          </div>
+          {
+            (localStorage.getItem('GOOGLE') && (<CreateOrganisationform organisation={organisation} />))
+          }
+
+          <div className="divider my-4 divider-solid" />
+          {
+            (localStorage.getItem('GOOGLE') && (<CreatePathWaste />))
+          }
         </div>
       </section>
     );
   }
 }
-
-export default Customizer;
+const mapStateToProps = state => ({
+  data: state.settings.organisation,
+});
+export default connect(
+  mapStateToProps,
+  null
+)(Customizer);

@@ -24,7 +24,12 @@ export function changeTheme(themeOption) {
 export function choseHeader(headervalue) {
   return { type: types.CHANGE_HEADER, value: headervalue }
 }
-
 export function databaseNotify(firestore) {
   return { type: types.FireStore_ACTION, value: firestore }
+}
+export function ConnectFromGoogle(user) {
+  return { type: types.CONNECT_ACTION, value: user }
+}
+export function CONNECT_ORGANISATION(organisation) {
+  return { type: types.CONNECT_ORGANISATION, value: organisation }
 }
