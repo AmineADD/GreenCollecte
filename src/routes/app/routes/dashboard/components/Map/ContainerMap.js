@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ModalCostum from '../Modal/Modal';
 import CreateWasteform from '../Form/CreateWasteForm';
 
-const ContainerMap = ({ data }) => {
+const ContainerMap = ({ data, center, radius }) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -14,7 +14,7 @@ const ContainerMap = ({ data }) => {
         <div className="col-xl-12">
             <div className="container-fluid container-mw">
                 <div className="row">
-                    <CollecteMap markers={data} />
+                    <CollecteMap markers={data} orga={center} radius={radius} />
                 </div>
                 <div className='row' style={{
                     position: "absolute", top: 0, left: 0, marginLeft: '40px',

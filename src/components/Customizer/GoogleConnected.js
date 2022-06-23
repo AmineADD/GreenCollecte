@@ -18,7 +18,6 @@ const GoogleConnected = ({ handleConnectGoogle }) => {
                 handleConnectGoogle(res)
             }).catch((err) => {
                 console.log(err)
-                handleConnectGoogle(null)
             })
     }
     const disconnect = () => {

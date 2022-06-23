@@ -9,3 +9,5 @@ export const CONNECT_ACTION = 'CONNECT_ACTION';
 export const CONNECT_ORGANISATION = 'CONNECT_ORGANISATION';
 export const CHANGE_HEADER = 'changeHeader';
 export const FireStore_ACTION = 'fireStore';
+export const CHANGE_RADIUS_MAP = 'CHANGE_RADIUS_MAP'
+export const HANDLE_Collect = 'HANDLE_Collect'

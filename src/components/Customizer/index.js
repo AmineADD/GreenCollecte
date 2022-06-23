@@ -8,6 +8,7 @@ import GoogleConnected from './GoogleConnected';
 import CreateOrganisationform from '../../routes/app/routes/dashboard/components/Form/CreateOrganisationForm';
 import { connect } from 'react-redux';
 import CreatePathWaste from '../../routes/app/routes/dashboard/components/Form/CreatePathWaste';
+import { CHANGERADIUSMAP } from '../../actions/settingsActions';
 
 class Customizer extends React.Component {
   constructor() {
@@ -41,9 +42,10 @@ class Customizer extends React.Component {
 
 
 
-  render() {
 
+  render() {
     const organisation = this.props.data.find((orga) => orga.displayName === localStorage.getItem('GOOGLE'));
+
     return (
       <section
         id="quickview-customizer"
@@ -65,15 +67,13 @@ class Customizer extends React.Component {
           <div className="text-right">
             <GoogleConnected />
           </div>
-
           <div className="divider my-4 divider-solid" />
           {
-            (localStorage.getItem('GOOGLE') && (<CreateOrganisationform organisation={organisation} />))
+            (this.props.user && (<div className="divider my-4 divider-solid" />) && (<CreateOrganisationform organisation={organisation} />))
           }
-
-          <div className="divider my-4 divider-solid" />
           {
-            (localStorage.getItem('GOOGLE') && (<CreatePathWaste />))
+
+            (organisation && this.props.user && (<div className="divider my-4 divider-solid" />) && (<CreatePathWaste radius={this.props.radius} nameCenter={organisation.name} center={organisation.position} handleRadius={this.props.handleRadiusChanges} markers={this.props.markers} />))
           }
         </div>
       </section>
@@ -82,8 +82,16 @@ class Customizer extends React.Component {
 }
 const mapStateToProps = state => ({
   data: state.settings.organisation,
+  user: state.settings.user,
+  radius: state.settings.radius,
+  markers: state.settings.fireStore
+});
+const mapDispatchToProps = dispatch => ({
+  handleRadiusChanges: (radius) => {
+    dispatch(CHANGERADIUSMAP(radius));
+  },
 });
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Customizer);

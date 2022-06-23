@@ -10,7 +10,9 @@ import {
   CHANGE_HEADER,
   FireStore_ACTION,
   CONNECT_ORGANISATION,
-  CONNECT_ACTION
+  CHANGE_RADIUS_MAP,
+  CONNECT_ACTION,
+  HANDLE_Collect
 } from '../constants/actionTypes';
 
 const initialSettings = APPCONFIG.settings;
@@ -68,12 +70,21 @@ const settings = (state = initialSettings, action) => {
         ...state,
         user: action.value
       };
-    case CONNECT_ORGANISATION: {
+    case CONNECT_ORGANISATION:
       return {
         ...state,
         organisation: action.value
-      }
-    }
+      };
+    case CHANGE_RADIUS_MAP:
+      return {
+        ...state,
+        radius: action.value
+      };
+    case HANDLE_Collect:
+      return {
+        ...state,
+        collect: action.value
+      };
     default:
       return state;
   }

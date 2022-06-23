@@ -470,3 +470,14 @@
          bottom: 42px;
      }
  }
+
+ /* Cercle*/
+
+ .circle-text {
+     width: 500px;
+     height: 380px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     background: #4679BD;
+ }

@@ -46,7 +46,7 @@ const CreateOrganisationform = ({ organisation }) => {
             await addDoc(collection(database, "organisation"), {
                 name,
                 displayName: localStorage.getItem('GOOGLE'),
-                address: position,
+                address: position ? position.label : '',
                 position: posLatLong,
                 nbTrucks: nbTrucks,
                 nbWorkers: nbWorkers
@@ -73,25 +73,25 @@ const CreateOrganisationform = ({ organisation }) => {
                                 onChange={(e) => setName(e.target.value)}
                                 fullWidth
                                 disabled={isDisabled}
-                                value={organisation ? organisation.name : ''}
+                                defaultValue={organisation ? organisation.name : ''}
                             />
                         </div>
                         <div className="form-group">
-                            {/*   {!isDisabled && (<GooglePlacesAutocomplete
-                                apiKey=""
-                                selectProps={{
-                                    position,
-                                    onChange: setPosition,
-                                    placeholder: "Adresse",
-                                }}
-                            />)} */}
+                            {!isDisabled && (
+                                <GooglePlacesAutocomplete
+                                    apiKey={process.env.REACT_APP_apiKey}
+                                    selectProps={{
+                                        position,
+                                        onChange: setPosition,
+                                        placeholder: "Adresse",
+                                    }}
+                                />)}
                         </div>
                         <div className="form-group">
                             <label htmlFor="nbTrucs">NB Camions</label>
                             <Input
                                 id="nbTrucs"
                                 type='number'
-                                defaultValue={1}
                                 inputProps={{
                                     min: 1,
                                     max: 100
@@ -99,16 +99,15 @@ const CreateOrganisationform = ({ organisation }) => {
                                 }
                                 onChange={(e) => setNbTrucks(e.target.value)}
                                 fullWidth
-                                value={organisation ? organisation.nbTrucks : ''}
+                                defaultValue={organisation ? organisation.nbTrucks : 1}
                                 disabled={isDisabled}
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="nbWorkers">NB employès</label>
+                            <label htmlFor="nbWorkers">NB d'équipes</label>
                             <Input
                                 id="nbWorkers"
                                 type='number'
-                                defaultValue={1}
                                 inputProps={{
                                     min: 1,
                                     max: 200
@@ -116,7 +115,7 @@ const CreateOrganisationform = ({ organisation }) => {
                                 }
                                 onChange={(e) => setNbWorkers(e.target.value)}
                                 fullWidth
-                                value={organisation ? organisation.nbWorkers : ''}
+                                defaultValue={organisation ? organisation.nbWorkers : 1}
                                 disabled={isDisabled}
                             />
                         </div>

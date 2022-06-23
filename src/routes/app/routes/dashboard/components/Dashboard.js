@@ -7,7 +7,7 @@ import ContainerMap from './Map/ContainerMap';
 import Header from './Header/Header';
 
 
-const Main = ({ connected, database }) => (
+const Main = ({ connected, database, orga, radius }) => (
   <div className="grid-structure">
     <Header />
     <div className="row">
@@ -17,7 +17,7 @@ const Main = ({ connected, database }) => (
         </div>)
       }
       <div className={`col-md-${connected ? 9 : 12}`}>
-        <ContainerMap data={database} />
+        <ContainerMap data={database} center={orga} radius={radius} />
       </div>
     </div>
   </div>
@@ -27,13 +27,12 @@ const Main = ({ connected, database }) => (
 
 
 
-const Dashboard = ({ db, user }) => {
-
-
+const Dashboard = ({ db, user, organisation, radius }) => {
+  const center = organisation.find((orga) => orga.displayName === localStorage.getItem('GOOGLE'));
   return (
     <div className="container-fluid no-breadcrumb page-dashboard">
       <QueueAnim type="bottom" className="ui-animate">
-        <Main connected={!!user} database={db} />
+        <Main connected={!!user} database={db} orga={center} radius={radius} />
       </QueueAnim>
     </div>
   );
@@ -42,6 +41,8 @@ const mapStateToProps = state => ({
   headerValue: state.settings.headervalue,
   db: state.settings.fireStore,
   user: state.settings.user,
+  organisation: state.settings.organisation,
+  radius: state.settings.radius
 });
 
 

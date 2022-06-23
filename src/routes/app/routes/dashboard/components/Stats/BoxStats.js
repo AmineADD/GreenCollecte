@@ -19,7 +19,7 @@ const BoxStat = ({ value, title, subTitle, icon, iconColor }) => (
 
 
 BoxStat.propTypes = {
-    value: PropTypes.number,
+
     title: PropTypes.string,
     subTitle: PropTypes.string,
     icon: PropTypes.string,

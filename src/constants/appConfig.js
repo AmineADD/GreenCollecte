@@ -6,7 +6,7 @@ const APPCONFIG = {
   user: 'Amine',
   year,
   AutoCloseMobileNav: true,          // true, false. Automatically close sidenav on route change (Mobile only)
-  showCustomizer: true,              // Boolean: true, false. Customizer will be opened (visible) first time app was loaded if set to true
+  showCustomizer: false,              // Boolean: true, false. Customizer will be opened (visible) first time app was loaded if set to true
   color: {
     primary: '#00BCD4',
     success: '#8BC34A',
@@ -28,7 +28,9 @@ const APPCONFIG = {
     headervalue: '1',
     fireStore: [],
     user: localStorage.getItem('GOOGLE'),
-    organisation: []
+    organisation: [],
+    radius: 800,
+    collect: []
   }
 };
 
