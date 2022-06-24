@@ -52,6 +52,8 @@ const CreateOrganisationform = ({ organisation }) => {
                 nbWorkers: nbWorkers
             }).then(() => {
                 setIsSubmitted(true);
+            }).catch((err) => {
+                window.location.reload();
             });
             console.log("done")
         } else {

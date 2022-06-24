@@ -8,16 +8,15 @@ import {
 const GoogleConnected = ({ handleConnectGoogle }) => {
 
     const [display, setDisplay] = useState(localStorage.getItem('GOOGLE'));
-
-    const signUPINGoogle = () => {
-        const provider = new GoogleAuthProvider();
-        signInWithPopup(authentification, provider)
+    const provider = new GoogleAuthProvider();
+    const signUPINGoogle = async () => {
+        await signInWithPopup(authentification, provider)
             .then((res) => {
                 localStorage.setItem('GOOGLE', res.user.displayName);
                 setDisplay(res.user.displayName);
                 handleConnectGoogle(res)
             }).catch((err) => {
-                console.log(err)
+                console.log(err, provider)
             })
     }
     const disconnect = () => {
