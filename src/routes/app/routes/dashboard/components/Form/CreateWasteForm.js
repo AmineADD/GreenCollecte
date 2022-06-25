@@ -77,6 +77,7 @@ const CreateWasteform = ({ onClose }) => {
         if (kg && nbPiece && value && img && posLatLong) {
             await addDoc(collection(database, "wastes"), {
                 position: posLatLong,
+                address: position ? position.label : '',
                 idPassage: idPassage ? idPassage : "",
                 priority: value,
                 src: img,
@@ -138,14 +139,14 @@ const CreateWasteform = ({ onClose }) => {
                             </RadioGroup>
                         </div>
                         <div className="form-group">
-                            {/* <GooglePlacesAutocomplete
-                                apiKey=""
+                            <GooglePlacesAutocomplete
+                                apiKey={process.env.REACT_APP_apiKey}
                                 selectProps={{
                                     position,
                                     onChange: setPosition,
-                                    placeholder:'Votre adresse'
+                                    placeholder: 'Votre adresse'
                                 }}
-                            /> */}
+                            />
                         </div>
                         <div className="form-group">
                             <label htmlFor="icon-button-file">

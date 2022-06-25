@@ -33,3 +33,10 @@ export function ConnectFromGoogle(user) {
 export function CONNECT_ORGANISATION(organisation) {
   return { type: types.CONNECT_ORGANISATION, value: organisation }
 }
+export function CHANGERADIUSMAP(radius) {
+  return { type: types.CHANGE_RADIUS_MAP, value: radius }
+}
+
+export function handleGetCollect(data) {
+  return { type: types.HANDLE_Collect, value: data }
+}

@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 
 
-const DetailsMarker = ({ text, src, priority, nbPiece, weight, passage, creationDate }) => (
+const DetailsMarker = ({ text, src, priority, nbPiece, weight, passage, creationDate, address }) => (
     <div>
         <Card style={{ maxWidth: 400 }}>
             <CardHeader
@@ -27,8 +27,8 @@ const DetailsMarker = ({ text, src, priority, nbPiece, weight, passage, creation
                 title={text}
             />
             <CardContent>
+                <span className="text-secondary">{address ? address : ''}</span>
                 <table className="mdl-data-table" style={{ width: '100%' }}>
-
                     <thead className="cf">
                         <tr>
                             <th style={{ border: '1px solid rgba(0, 0, 0, 0.1)' }} className="mdl-data-table__cell--non-numeric"><b>Poids</b></th>

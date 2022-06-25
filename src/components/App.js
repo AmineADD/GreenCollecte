@@ -81,7 +81,8 @@ const mapStateToProps = (state, ownProps) => ({
   theme: state.settings.theme,
   db: state.settings.fireStore,
   user: state.settings.user,
-  organisation: state.settings.organisation
+  organisation: state.settings.organisation,
+  radius: state.settings.radius
 });
 
 export default connect(

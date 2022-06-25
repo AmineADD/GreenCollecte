@@ -3,22 +3,23 @@ import DEMO from 'constants/demoData';
 import { connect } from 'react-redux';
 import {
   databaseNotify,
-  CONNECT_ORGANISATION
+  CONNECT_ORGANISATION,
+  handleGetCollect
 } from 'actions/settingsActions';
 
 import database from '../../../routes/app/Firebase/Firebase'
 import { collection, onSnapshot } from '@firebase/firestore';
 
-const Footer = (props) => {
+const Footer = ({ handleDatabaseNotify, handleCONNECT_ORGANISATION, handleGetCollect, db }) => {
 
   useEffect(() => {
-    const { handleDatabaseNotify, handleCONNECT_ORGANISATION } = props;
     const truksCollectionRef = collection(database, "wastes");
     const OrganisationCollectionRef = collection(database, "organisation");
+    const CollectCollectionRef = collection(database, "collect")
     onSnapshot(truksCollectionRef, (snapshot) => {
       const items = []
       snapshot.docs.forEach((doc) => {
-        items.push(doc.data())
+        items.push({ ...doc.data(), id: doc.id })
       })
       handleDatabaseNotify(items)
     });
@@ -28,6 +29,16 @@ const Footer = (props) => {
         items.push(docOrga.data())
       })
       handleCONNECT_ORGANISATION(items)
+    });
+    onSnapshot(CollectCollectionRef, (snapCollect) => {
+      const items = []
+      snapCollect.docs.forEach((docCollect) => {
+        const data = docCollect.data();
+        items.push({
+          distance: parseFloat(data.distance)
+        })
+      })
+      handleGetCollect(items);
     });
   }, [])
   return (
@@ -46,7 +57,9 @@ const Footer = (props) => {
   )
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  db: state.settings.fireStore,
+});
 
 const mapDispatchToProps = dispatch => ({
   handleDatabaseNotify: (data) => {
@@ -55,6 +68,9 @@ const mapDispatchToProps = dispatch => ({
   handleCONNECT_ORGANISATION: (data) => {
     dispatch(CONNECT_ORGANISATION(data));
   },
+  handleGetCollect: (data) => {
+    dispatch(handleGetCollect(data))
+  }
 });
 
 export default connect(
